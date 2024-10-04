@@ -99,7 +99,7 @@ label_processor = keras.layers.StringLookup(
 print(label_processor.get_vocabulary())
 
 # Add this line to save the vocabulary
-np.save('saved_vocabulary.npy', label_processor.get_vocabulary())
+np.save('model_obj\saved_vocabulary.npy', label_processor.get_vocabulary())
 
 
 def prepare_all_videos(df, root_dir):
@@ -221,7 +221,6 @@ def run_experiment():
     # Ensure the labels are integers
     numeric_test_labels = numeric_test_labels.astype(int)
 
-    print("test:", type(numeric_test_labels[0]))
     true_label_names = [class_vocab[idx] for idx in numeric_test_labels]
 
     # Print predictions vs actual labels
@@ -236,7 +235,7 @@ def run_experiment():
     print(f"\nTest accuracy: {accuracy:.2%}")
 
     # Add this line to save the entire model
-    seq_model.save('path_to_your_saved_model.h5')
+    seq_model.save('model_obj\keras_model.h5')
 
     return history, seq_model
 
