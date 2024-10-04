@@ -96,5 +96,5 @@ def main(video_path):
     print(f"Probability: {probabilities[predicted_label_index]:.2f}")
 
 if __name__ == "__main__":
-    video_path = "test_cpr.mp4" #input("Enter the path to the video file: ")
+    video_path = input("Enter the path to the video file: ")
     main(video_path)

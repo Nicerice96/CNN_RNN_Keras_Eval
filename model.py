@@ -101,57 +101,37 @@ print(label_processor.get_vocabulary())
 # Add this line to save the vocabulary
 np.save('model_obj\saved_vocabulary.npy', label_processor.get_vocabulary())
 
-
 def prepare_all_videos(df, root_dir):
     num_samples = len(df)
     video_paths = df["file_path"].values.tolist()
     labels = df["label"].values
     labels = keras.ops.convert_to_numpy(label_processor(labels[..., None]))
 
-    # `frame_masks` and `frame_features` are what we will feed to our sequence model.
-    # `frame_masks` will contain a bunch of booleans denoting if a timestep is
-    # masked with padding or not.
     frame_masks = np.zeros(shape=(num_samples, MAX_SEQ_LENGTH), dtype="bool")
     frame_features = np.zeros(
         shape=(num_samples, MAX_SEQ_LENGTH, NUM_FEATURES), dtype="float32"
     )
 
-    # For each video.
     for idx, path in enumerate(video_paths):
-        # Gather all its frames and add a batch dimension.
         frames = load_video(os.path.join(root_dir, path))
-        frames = frames[None, ...]
+        frames = frames[None, ...]  # Add batch dimension
 
-        # Initialize placeholders to store the masks and features of the current video.
-        temp_frame_mask = np.zeros(
-            shape=(
-                1,
-                MAX_SEQ_LENGTH,
-            ),
-            dtype="bool",
-        )
-        temp_frame_features = np.zeros(
-            shape=(1, MAX_SEQ_LENGTH, NUM_FEATURES), dtype="float32"
-        )
+        video_length = frames.shape[1]
+        print(f"Processing video {idx+1}/{num_samples}: {path}, frames: {video_length}")
 
-        # Extract features from the frames of the current video.
-        for i, batch in enumerate(frames):
-            video_length = batch.shape[0]
-            length = min(MAX_SEQ_LENGTH, video_length)
-            for j in range(length):
-                temp_frame_features[i, j, :] = feature_extractor.predict(
-                    batch[None, j, :], verbose=0,
-                )
-            temp_frame_mask[i, :length] = 1  # 1 = not masked, 0 = masked
+        length = min(MAX_SEQ_LENGTH, video_length)
 
-        frame_features[idx,] = temp_frame_features.squeeze()
-        frame_masks[idx,] = temp_frame_mask.squeeze()
+        if length > 0:
+            frame_features[idx, :length, :] = feature_extractor.predict(
+                frames[0, :length], verbose=0
+            )
+            frame_masks[idx, :length] = 1  # Mark the valid frames
 
     return (frame_features, frame_masks), labels
 
 
-train_data, train_labels = prepare_all_videos(train_df, "train")
-test_data, test_labels = prepare_all_videos(test_df, "test")
+train_data, train_labels = prepare_all_videos(train_df, "")
+test_data, test_labels = prepare_all_videos(test_df, "")
 
 print(f"Frame features in train set: {train_data[0].shape}")
 print(f"Frame masks in train set: {train_data[1].shape}")
