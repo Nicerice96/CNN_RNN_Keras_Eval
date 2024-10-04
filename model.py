@@ -199,13 +199,47 @@ def run_experiment():
     )
 
     seq_model.load_weights(filepath)
-    _, accuracy = seq_model.evaluate([test_data[0], test_data[1]], test_labels)
-    print(f"Test accuracy: {round(accuracy * 100, 2)}%")
+    
+    # Get predictions for the test set
+    predictions = seq_model.predict([test_data[0], test_data[1]])
+    predicted_labels = np.argmax(predictions, axis=1)
+    
+    # Convert numeric labels back to string labels
+    class_vocab = label_processor.get_vocabulary()
+    predicted_label_names = [class_vocab[idx] for idx in predicted_labels]
+    
+    # Convert test_labels to numeric format if they're not already
+    if isinstance(test_labels[0], str):
+        numeric_test_labels = label_processor(test_labels).numpy()
+    else:
+        numeric_test_labels = test_labels
+
+    # Check if numeric_test_labels is 2D and flatten it if necessary
+    if numeric_test_labels.ndim > 1:
+        numeric_test_labels = numeric_test_labels.flatten()
+
+    # Ensure the labels are integers
+    numeric_test_labels = numeric_test_labels.astype(int)
+
+    print("test:", type(numeric_test_labels[0]))
+    true_label_names = [class_vocab[idx] for idx in numeric_test_labels]
+
+    # Print predictions vs actual labels
+    print("\nPredictions vs Actual Labels:")
+    print("--------------------------------")
+    for pred, true, prob in zip(predicted_label_names, true_label_names, predictions):
+        max_prob = np.max(prob)
+        print(f"Predicted: {pred:<20} Actual: {true:<20} Confidence: {max_prob:.2f}")
+
+    # Calculate and print accuracy
+    accuracy = np.mean(predicted_labels == numeric_test_labels)
+    print(f"\nTest accuracy: {accuracy:.2%}")
 
     # Add this line to save the entire model
-    seq_model.save('keras_model.h5')
+    seq_model.save('path_to_your_saved_model.h5')
 
     return history, seq_model
 
 
+# Run the experiment
 _, sequence_model = run_experiment()
