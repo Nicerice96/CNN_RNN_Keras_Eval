@@ -98,6 +98,9 @@ label_processor = keras.layers.StringLookup(
 )
 print(label_processor.get_vocabulary())
 
+# Add this line to save the vocabulary
+np.save('saved_vocabulary.npy', label_processor.get_vocabulary())
+
 
 def prepare_all_videos(df, root_dir):
     num_samples = len(df)
@@ -198,6 +201,9 @@ def run_experiment():
     seq_model.load_weights(filepath)
     _, accuracy = seq_model.evaluate([test_data[0], test_data[1]], test_labels)
     print(f"Test accuracy: {round(accuracy * 100, 2)}%")
+
+    # Add this line to save the entire model
+    seq_model.save('keras_model.h5')
 
     return history, seq_model
 
