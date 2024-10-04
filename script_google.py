@@ -7,7 +7,7 @@ from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
-video_folder_id = '1awq89oED7peh_bHNv7TsJoWhqZ6eDlDL'
+video_folder_id = '1pVjVtEvlH1tg_3g8d3efOUbKAmiPGfKP'
 folder_to_category = {
     "CPR": "Chest_Compression",
     "ETT": "ETT_Laryngeal",
