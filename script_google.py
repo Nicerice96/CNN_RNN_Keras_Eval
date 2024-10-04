@@ -11,10 +11,12 @@ video_folder_id = '1pVjVtEvlH1tg_3g8d3efOUbKAmiPGfKP'
 folder_to_category = {
     "CPR": "Chest_Compression",
     "ETT": "ETT_Laryngeal",
+    "Suction" : "Suction",
     "PPV": "PPV",
     "Pulse Oximeter": "Pulse_Oximeter",
     "Reposition": "Position_Airway",
-    "UVC": "UVC"
+    "UVC": "UVC",
+    "Drying" : "Drying"
 }
 
 
