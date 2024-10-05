@@ -4,3 +4,4 @@ venv/
 #ignore other files
 .DS_Store
 token.pickle
+video_metadata.csv
