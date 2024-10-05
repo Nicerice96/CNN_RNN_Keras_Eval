@@ -1,0 +1,5 @@
+#ignore Venv
+venv/
+
+#ignore other files
+.DS_Store
