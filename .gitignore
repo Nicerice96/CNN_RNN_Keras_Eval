@@ -1,5 +1,6 @@
 #ignore Venv
 venv/
+model_obj/
 
 #ignore other files
 .DS_Store
