@@ -75,11 +75,11 @@ def main(video_path):
     feature_extractor = build_feature_extractor()
 
     # Load the sequence model
-    sequence_model = load_model('model_obj\keras_model.h5')
+    sequence_model = load_model('model_obj/keras_model.h5')
 
     # Load the label processor
     label_processor = keras.layers.StringLookup(
-        num_oov_indices=0, vocabulary=np.load('model_obj\saved_vocabulary.npy')
+        num_oov_indices=0, vocabulary=np.load('model_obj/saved_vocabulary.npy')
     )
 
     # Prepare the video

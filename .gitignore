@@ -1,7 +1,7 @@
 #ignore Venv
 venv/
 model_obj/
-
+Videos/
 #ignore other files
 .DS_Store
 token.pickle
