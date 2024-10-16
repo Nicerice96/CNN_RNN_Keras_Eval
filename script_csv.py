@@ -8,6 +8,8 @@ folder_to_category = {
     "ETT": "ETT_Laryngeal",
     "PPV": "PPV",
     "Pulse Oximeter": "Pulse_Oximeter",
+    "Suction" : "Suction",
+    "Drying" : "Drying",
     "Reposition": "Position_Airway",
     "UVC": "UVC"
 }
