@@ -16,7 +16,7 @@ IMG_SIZE = 224
 BATCH_SIZE = 64
 EPOCHS = 10
 
-MAX_SEQ_LENGTH = 20
+MAX_SEQ_LENGTH = 20 #frames: if video is shorter than 20 frames, use what's available
 NUM_FEATURES = 2048
 
 
