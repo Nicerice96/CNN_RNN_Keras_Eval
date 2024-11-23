@@ -1,8 +1,8 @@
 import os
 import json
 
+# Define the video folder and category mappings
 video_folder = 'Videos'
-
 folder_to_category = {
     "CPR": "Chest_Compression",
     "ETT": "ETT_Laryngeal",
@@ -14,47 +14,45 @@ folder_to_category = {
     "UVC": "UVC"
 }
 
-output_json = []
-
-# Define a response for each category (video action)
+# Define action descriptions
 action_descriptions = {
-    "CPR": "This video shows Chest Compressions being performed on the baby.",
-    "ETT": "This video shows endotracheal intubation insertion for airway management in the baby.",
-    "PPV": "This video shows Postive Pressure Ventaliation being administered to the baby.",
-    "Pulse Oximeter": "This video shows the use of a pulse oximetery to monitor the baby's oxygen levels.",
-    "Suction": "This video shows suctioning being performed on the baby.",
-    "Drying": "This video shows the drying procedure being performed on the baby.",
-    "Reposition": "This video shows repositioning of the baby’s airway.",
-    "UVC": "This video shows umbilical venous catheter insertion into the baby for intravenous access."
+    "PPV": "This video shows a medical professional performing Positive Pressure Ventilation (PPV) on a newborn baby. They are using a bag-valve-mask device to provide assisted breathing support.",
+    "CPR": "This video shows a healthcare provider performing chest compressions on a newborn baby. The compressions are being delivered at the appropriate depth and rate for neonatal resuscitation.",
+    "ETT": "This video shows the process of endotracheal intubation being performed on a newborn baby. A medical professional is carefully inserting a breathing tube through the vocal cords.",
+    "Drying": "This video shows medical staff thoroughly drying a newborn baby immediately after birth. This is an essential step to prevent heat loss and stimulate breathing.",
+    "Pulse Oximeter": "This video shows the placement of a pulse oximeter on a newborn baby's right hand or wrist. This device is being used to monitor the baby's oxygen saturation and heart rate.",
+    "Reposition": "This video shows healthcare providers repositioning a newborn baby's head and neck to establish an optimal airway position for breathing.",
+    "Suction": "This video shows medical staff performing suction to clear amniotic fluid and secretions from a newborn baby's mouth and nose, ensuring clear airways.",
+    "UVC": "This video shows the insertion of an umbilical venous catheter (UVC) into a newborn baby's umbilical cord. This provides immediate vascular access for medications or fluids if needed."
 }
+
+output_json = []
 
 # Loop through each subfolder
 for folder_name in folder_to_category:
     folder_path = os.path.join(video_folder, folder_name)
-    
     print(f"Processing folder: {folder_path}")
-
+    
     if os.path.isdir(folder_path):
         print(f"{folder_path} exists and is a directory.")
-        
-        for video in os.listdir(folder_path):  
-            if video.endswith(".mp4"):  
+        for video in os.listdir(folder_path):
+            if video.endswith(".mp4"):
                 print(f"Found video: {video}")
                 
                 # Get the action description for the category
-                description = action_descriptions.get(folder_name, "This video shows an action related to the specified category.")
+                description = action_descriptions.get(folder_name, "This video shows an action related to neonatal resuscitation.")
                 
-                # Create the video entry with the new format
+                # Create the video entry with the specified format
                 video_entry = {
-                    "video": os.path.join(folder_name, video),
+                    "video": os.path.join(folder_name, video),  # Include folder path for correct reference
                     "conversations": [
                         {
                             "from": "human",
                             "value": "Please provide a detailed description of the video."
                         },
                         {
-                            "from": "gpt",
-                            "value": description  # Use the specific description based on the category
+                            "from": "assistant",
+                            "value": description
                         }
                     ]
                 }
