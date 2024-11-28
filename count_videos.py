@@ -1,6 +1,6 @@
 import os
 
-video_src = "Videos"
+video_src = "Videos2"
 
 # Change to the target directory
 os.chdir(video_src)
