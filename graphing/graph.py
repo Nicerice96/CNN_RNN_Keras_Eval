@@ -2,7 +2,7 @@ import json
 import matplotlib.pyplot as plt
 
 # Load your JSON data
-with open('checkpoint1/trainer_state.json', 'r') as file:
+with open('checkpoint2/trainer_state.json', 'r') as file:
     data = json.load(file)
 
 # Extract the 'log_history' list
@@ -18,13 +18,12 @@ train_losses = []
 # Loop through the 'log_history' and extract 'epoch', 'loss', 'learning_rate', 'grad_norm', etc.
 for entry in log_history:
     epoch = entry["epoch"]
-    
+
     # Extract 'loss' or 'train_loss', and 'learning_rate' and 'grad_norm'
     if "loss" in entry:
         losses.append(entry["loss"])
     elif "train_loss" in entry:  # Handle case where 'train_loss' exists
         train_losses.append(entry["train_loss"])
-        
     if "learning_rate" in entry:
         learning_rates.append(entry["learning_rate"])
     if "grad_norm" in entry:
@@ -43,7 +42,7 @@ epochs = epochs[:min_length]
 losses = losses[:min_length]
 
 # Create subplots for different metrics
-fig, axs = plt.subplots(3, 1, figsize=(10, 18))  # Create 3 subplots
+fig, axs = plt.subplots(3, 1, figsize=(10, 18), gridspec_kw={'hspace': 0.5})
 
 # Plot loss
 axs[0].plot(epochs, losses, marker='o', linestyle='-', color='b', label='Loss')
