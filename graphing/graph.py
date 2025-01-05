@@ -2,7 +2,7 @@ import json
 import matplotlib.pyplot as plt
 
 # Load your JSON data
-with open('checkpoint2/trainer_state.json', 'r') as file:
+with open('checkpoint3/trainer_state.json', 'r') as file:
     data = json.load(file)
 
 # Extract the 'log_history' list

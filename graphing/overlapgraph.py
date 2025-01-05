@@ -2,9 +2,9 @@ import json
 import matplotlib.pyplot as plt
 
 # Load JSON data for both checkpoints
-with open('checkpoint1/trainer_state.json', 'r') as file:
-    data1 = json.load(file)
 with open('checkpoint2/trainer_state.json', 'r') as file:
+    data1 = json.load(file)
+with open('checkpoint3/trainer_state.json', 'r') as file:
     data2 = json.load(file)
 
 # Extract the 'log_history' list for both checkpoints
@@ -49,8 +49,8 @@ grad_norms1, grad_norms2 = grad_norms1[:min_length], grad_norms2[:min_length]
 fig, axs = plt.subplots(3, 1, figsize=(10, 18), gridspec_kw={'hspace': 0.5})
 
 # Plot loss
-axs[0].plot(epochs1, losses1, marker='o', linestyle='-', color='r', label='Checkpoint 1 Loss')
-axs[0].plot(epochs2, losses2, marker='o', linestyle='-', color='b', label='Checkpoint 2 Loss')
+axs[0].plot(epochs1, losses1, marker='o', linestyle='-', color='r', label='Checkpoint 2 Loss')
+axs[0].plot(epochs2, losses2, marker='o', linestyle='-', color='b', label='Checkpoint 3 Loss')
 axs[0].set_title("Loss vs. Epoch")
 axs[0].set_xlabel("Epoch")
 axs[0].set_ylabel("Loss")
@@ -58,8 +58,8 @@ axs[0].grid(True)
 axs[0].legend()
 
 # Plot learning rate
-axs[1].plot(epochs1, learning_rates1, marker='o', linestyle='-', color='r', label='Checkpoint 1 Learning Rate')
-axs[1].plot(epochs2, learning_rates2, marker='o', linestyle='-', color='b', label='Checkpoint 2 Learning Rate')
+axs[1].plot(epochs1, learning_rates1, marker='o', linestyle='-', color='r', label='Checkpoint 2 Learning Rate')
+axs[1].plot(epochs2, learning_rates2, marker='o', linestyle='-', color='b', label='Checkpoint 3 Learning Rate')
 axs[1].set_title("Learning Rate vs. Epoch")
 axs[1].set_xlabel("Epoch")
 axs[1].set_ylabel("Learning Rate")
@@ -67,8 +67,8 @@ axs[1].grid(True)
 axs[1].legend()
 
 # Plot grad_norm
-axs[2].plot(epochs1, grad_norms1, marker='o', linestyle='-', color='r', label='Checkpoint 1 Gradient Norm')
-axs[2].plot(epochs2, grad_norms2, marker='o', linestyle='-', color='b', label='Checkpoint 2 Gradient Norm')
+axs[2].plot(epochs1, grad_norms1, marker='o', linestyle='-', color='r', label='Checkpoint 2 Gradient Norm')
+axs[2].plot(epochs2, grad_norms2, marker='o', linestyle='-', color='b', label='Checkpoint 3 Gradient Norm')
 axs[2].set_title("Gradient Norm vs. Epoch")
 axs[2].set_xlabel("Epoch")
 axs[2].set_ylabel("Gradient Norm")
@@ -86,5 +86,5 @@ avg_grad_norm1 = sum(grad_norms1) / len(grad_norms1) if grad_norms1 else 0
 avg_grad_norm2 = sum(grad_norms2) / len(grad_norms2) if grad_norms2 else 0
 
 # Print the average values
-print(f"Checkpoint 1 - Average Loss: {avg_loss1:.4f}, Average Gradient Norm: {avg_grad_norm1:.4f}")
-print(f"Checkpoint 2 - Average Loss: {avg_loss2:.4f}, Average Gradient Norm: {avg_grad_norm2:.4f}")
+print(f"Checkpoint 2 - Average Loss: {avg_loss1:.4f}, Average Gradient Norm: {avg_grad_norm1:.4f}")
+print(f"Checkpoint 3 - Average Loss: {avg_loss2:.4f}, Average Gradient Norm: {avg_grad_norm2:.4f}")
